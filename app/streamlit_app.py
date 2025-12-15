@@ -6,7 +6,7 @@ import numpy as np
 import plotly.express as px
 from sklearn.preprocessing import StandardScaler
 
-MODEL_PATH = "./model/churn_model.pkl"
+MODEL_PATH = "model/churn_model.pkl"
 DATA_PATH = "data/WA_Fn-UseC_-Telco-Customer-Churn.csv"
 
 st.set_page_config(layout="wide", page_title="Telco Churn Dashboard")
@@ -19,9 +19,18 @@ def load_data(path):
     return df
 
 @st.cache_data
+@st.cache_resource
 def load_model(path):
-    obj = joblib.load(path)
-    return obj
+    try:
+        return joblib.load(path)
+    except FileNotFoundError:
+        st.error("Model file not found. Please train the model first.")
+        st.stop()
+
+
+model_obj = load_model(MODEL_PATH)
+model = model_obj["model"]
+model_columns = model_obj["columns"]
 
 df = load_data(DATA_PATH)
 st.title("Telco Customer Churn - Quick Dashboard")
