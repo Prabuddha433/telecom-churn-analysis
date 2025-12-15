@@ -5,6 +5,9 @@ import joblib
 import numpy as np
 import plotly.express as px
 from sklearn.preprocessing import StandardScaler
+import os
+from src.model import train_and_save
+
 
 MODEL_PATH = "model/churn_model.pkl"
 DATA_PATH = "data/WA_Fn-UseC_-Telco-Customer-Churn.csv"
@@ -18,17 +21,18 @@ def load_data(path):
     df = df.replace({'No internet service': 'No', 'No phone service': 'No'})
     return df
 
-@st.cache_data
+
 @st.cache_resource
-def load_model(path):
-    try:
-        return joblib.load(path)
-    except FileNotFoundError:
-        st.error("Model file not found. Please train the model first.")
-        st.stop()
+def get_model():
+    if not os.path.exists(MODEL_PATH):
+        st.warning("Model not found. Training model...")
+        train_and_save(
+            raw_csv_path=DATA_PATH,
+            output_model_path=MODEL_PATH
+        )
+    return joblib.load(MODEL_PATH)
 
-
-model_obj = load_model(MODEL_PATH)
+model_obj = get_model()
 model = model_obj["model"]
 model_columns = model_obj["columns"]
 
