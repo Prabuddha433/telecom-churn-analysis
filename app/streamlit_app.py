@@ -1,10 +1,4 @@
 # app/streamlit_app.py
-import sys
-import os
-
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.append(ROOT_DIR)
-from src.model import train_and_save
 import streamlit as st # pyright: ignore[reportMissingImports]
 import pandas as pd # pyright: ignore[reportMissingModuleSource]
 import joblib
@@ -12,9 +6,7 @@ import numpy as np
 import plotly.express as px
 from sklearn.preprocessing import StandardScaler
 
-
-
-MODEL_PATH = "model/churn_model.pkl"
+MODEL_PATH = "./model/churn_model.pkl"
 DATA_PATH = "data/WA_Fn-UseC_-Telco-Customer-Churn.csv"
 
 st.set_page_config(layout="wide", page_title="Telco Churn Dashboard")
@@ -26,20 +18,10 @@ def load_data(path):
     df = df.replace({'No internet service': 'No', 'No phone service': 'No'})
     return df
 
-
-@st.cache_resource
-def get_model():
-    if not os.path.exists(MODEL_PATH):
-        st.warning("Model not found. Training model...")
-        train_and_save(
-            raw_csv_path=DATA_PATH,
-            output_model_path=MODEL_PATH
-        )
-    return joblib.load(MODEL_PATH)
-
-model_obj = get_model()
-model = model_obj["model"]
-model_columns = model_obj["columns"]
+@st.cache_data
+def load_model(path):
+    obj = joblib.load(path)
+    return obj
 
 df = load_data(DATA_PATH)
 st.title("Telco Customer Churn - Quick Dashboard")

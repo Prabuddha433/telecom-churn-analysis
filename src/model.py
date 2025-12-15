@@ -1,13 +1,29 @@
 # src/model.py
+import os
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
-import os
 import joblib
 from src.data_prep import load_raw, clean_telco, encode_features, split_data
 from src.feature_engineering import feature_engineering
-from src.utils import save_model
+from src.explainability import plot_feature_importance, shap_summary
+from src.utils import save_model, evaluate_model # type: ignore
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DATA_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "WA_Fn-UseC_-Telco-Customer-Churn.csv"
+)
+
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "model",
+    "churn_model.pkl"
+)
+
 
 
 
@@ -49,5 +65,8 @@ def train_and_save(raw_csv_path, output_model_path='model/churn_model.pkl'):
     print("Saved model to", output_model_path)
     return best, X_test, y_test, test_metrics
 
-if __name__ == '__main__':
-    model, X_test, y_test, metrics = train_and_save('../data/WA_Fn-UseC_-Telco-Customer-Churn.csv', output_model_path='../model/churn_model.pkl')
+if __name__ == "__main__":
+    model, X_test, y_test, metrics = train_and_save(
+        DATA_PATH,
+        output_model_path=MODEL_PATH
+    )
