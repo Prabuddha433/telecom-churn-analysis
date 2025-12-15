@@ -6,9 +6,8 @@ from sklearn.model_selection import GridSearchCV
 import os
 import joblib
 from src.data_prep import load_raw, clean_telco, encode_features, split_data
-from feature_engineering import feature_engineering
-from explainability import plot_feature_importance, shap_summary
-from utils import save_model, evaluate_model
+from src.feature_engineering import feature_engineering
+from src.utils import save_model
 
 
 

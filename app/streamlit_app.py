@@ -4,6 +4,7 @@ import os
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(ROOT_DIR)
+from src.model import train_and_save
 import streamlit as st # pyright: ignore[reportMissingImports]
 import pandas as pd # pyright: ignore[reportMissingModuleSource]
 import joblib
@@ -11,7 +12,6 @@ import numpy as np
 import plotly.express as px
 from sklearn.preprocessing import StandardScaler
 
-from src.model import train_and_save
 
 
 MODEL_PATH = "model/churn_model.pkl"
