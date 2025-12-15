@@ -49,5 +49,8 @@ def train_and_save(raw_csv_path, output_model_path='model/churn_model.pkl'):
     print("Saved model to", output_model_path)
     return best, X_test, y_test, test_metrics
 
-if __name__ == '__main__':
-    model, X_test, y_test, metrics = train_and_save('../data/WA_Fn-UseC_-Telco-Customer-Churn.csv', output_model_path='../model/churn_model.pkl')
+if __name__ == "__main__":
+    model, X_test, y_test, metrics = train_and_save(
+        DATA_PATH,
+        output_model_path=MODEL_PATH
+    )
