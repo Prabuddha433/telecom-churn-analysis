@@ -1,11 +1,15 @@
 # app/streamlit_app.py
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import streamlit as st # pyright: ignore[reportMissingImports]
 import pandas as pd # pyright: ignore[reportMissingModuleSource]
 import joblib
 import numpy as np
 import plotly.express as px
 from sklearn.preprocessing import StandardScaler
-import os
+
 from src.model import train_and_save
 
 
