@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 import os
 import joblib
-from data_prep import load_raw, clean_telco, encode_features, split_data
+from src.data_prep import load_raw, clean_telco, encode_features, split_data
 from feature_engineering import feature_engineering
 from explainability import plot_feature_importance, shap_summary
 from utils import save_model, evaluate_model
