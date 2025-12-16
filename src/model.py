@@ -25,6 +25,21 @@ MODEL_PATH = os.path.join(
 )
 
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DATA_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "WA_Fn-UseC_-Telco-Customer-Churn.csv"
+)
+
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "model",
+    "churn_model.pkl"
+)
+
+
 
 
 def train_and_save(raw_csv_path, output_model_path='model/churn_model.pkl'):
